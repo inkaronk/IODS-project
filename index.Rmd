@@ -1,5 +1,6 @@
 ---
 title: "IODS course project"
+author: Inka Ronkainen
 output:
   html_document:
     theme: cosmo
