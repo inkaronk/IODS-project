@@ -2,6 +2,12 @@
 ### *My thoughts about this course*
 In Introduction to Open Data Science 2021 -course I want to learn more about using R. I have been using it for a while, but it's still something very new to me. I have to ask a lot of help from my colleagues, so it would be nice to learn how to use it properly on my own. I'm very excited about this course and eager to learn new, it will make my job at University of Helsinki as a research assistant easier.  
   
+For example, I would like to learn more about
+
+* Data visualisation
+* Basic commands
+  + And something about the workflow
+  
 https://inkaronk.github.io/IODS-project/
 
 ```{r}
