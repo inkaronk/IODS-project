@@ -34,5 +34,4 @@ knitr::opts_chunk$set(error = TRUE)
 
 ***
 
-(more chapters to be added similarly as we proceed with the course!)
 
