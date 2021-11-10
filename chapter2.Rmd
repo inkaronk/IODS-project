@@ -1,13 +1,34 @@
-# Insert chapter 2 title here
+# **Regression and model validation**
 
-*Describe the work you have done this week and summarize your learning.*
-
-- Describe your work and results clearly. 
-- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.
-- Assume the reader has no previous knowledge of your data or the more advanced methods you are using.
+*This week I did a regression model and validation with R*
 
 ```{r}
 date()
 ```
+```
+data <- read.csv(file = "C:/LocalData/inkaronk/IODS-project/learning.2014csv", header = TRUE)
+str(data)
+dim(data)
+```
 
-Here we go again...
+#### This data consists of 183 participants from course called Introduction to Social Statistics. It was collected in 2014. This data has 7 variables called
+  1. Gender (M or F)
+  2. Age (in years)
+  3. Attitude (Global attitude toward statistics)
+  4. Deep approach (One dimension of ASSIST scale)
+  5. Surface approach (One dimension of ASSIST scale)
+  6. Strategic approach (One dimension of ASSIST scale)
+  7. Points (Exam points)
+
+```
+library(ggplot2)
+library(GGally)
+p <- ggpairs(data, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
+p
+![summary](C:/LocalData/inkaronk/IODS-project/p.png)
+```
+![summary](C:/LocalData/inkaronk/IODS-project/p.png)
+
+
+  From this graphical overview you can find summaries of the variables. It shows you correlations between different variables, scatter plots, gender distributions and normal curves. All of the variables are not normally distributed. There are correlations between surf&attitude, points&attitude, surf&stra and surf&deep.
+
