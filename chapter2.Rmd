@@ -5,13 +5,15 @@
 ```{r}
 date()
 ```
-```
+```{r}
 data <- read.csv(file = "C:/LocalData/inkaronk/IODS-project/learning.2014csv", header = TRUE)
 str(data)
 dim(data)
 ```
 
-#### This data consists of 183 participants from course called Introduction to Social Statistics. It was collected in 2014. This data has 7 variables called
+### About this dataset
+
+This data consists of 183 participants from course called Introduction to Social Statistics. It was collected in 2014. This data has 7 variables called
   1. Gender (M or F)
   2. Age (in years)
   3. Attitude (Global attitude toward statistics)
@@ -20,15 +22,34 @@ dim(data)
   6. Strategic approach (One dimension of ASSIST scale)
   7. Points (Exam points)
 
-```
+```{r}
 library(ggplot2)
 library(GGally)
 p <- ggpairs(data, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
 p
-![summary](C:/LocalData/inkaronk/IODS-project/p.png)
 ```
-![summary](C:/LocalData/inkaronk/IODS-project/p.png)
-
 
   From this graphical overview you can find summaries of the variables. It shows you correlations between different variables, scatter plots, gender distributions and normal curves. All of the variables are not normally distributed. There are correlations between surf&attitude, points&attitude, surf&stra and surf&deep.
+  
+### Regression model
 
+```{r}
+my_model <- lm(Points ~ Attitude + gender + Age, data = data)
+summary(my_model)
+```
+Here I did a multiple regression, because I used more than one explanatory variable. I used points as the target variable and attitude, age and gender as the explanatory variables. This means that I am looking if there are any casual relation between exam points and attitudes towards the study topic, age or gender. You can see that there was statistically significant relationship between exam points and attitude, but not with age or gender. This means that age or gender do not interpret good or bad study achievement by themselves, but the attitude towards the topic might. That's why I did it again with only the attitude:
+
+```{r}
+my_model1 <- lm(Points ~ Attitude, data = data)
+summary(my_model1)
+```
+
+Here you can see that the Multiple R-squared is  0.1906, which means that almost 20% of the variation in exam points are explained by the variation in attitudes.
+
+### Diagnostic plots
+```{r}
+par(mfrow = c(2,2))
+plot(my_model1, which = c(1,2,5))
+```
+
+These diagnostic plots show model assumptions on how the previous regression model fit reality. Residuals vs Fitted -plot shows if there are constant variance of errors. There are some spreaded residuals, which might be questionable. Normal QQ -plot shows if the errors are normally distributed (which is one assumption), and they are. Last plot, the Residuals vs leverage shows how much impact one participant has on the model. There are quite many outliers, answers are not linear.
