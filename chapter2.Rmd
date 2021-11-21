@@ -11,7 +11,7 @@ str(data)
 dim(data)
 ```
 
-### About this dataset
+## About this dataset
 
 This data consists of 183 participants from course called Introduction to Social Statistics. It was collected in 2014. This data has 7 variables called
   1. Gender (M or F)
@@ -31,7 +31,7 @@ p
 
   From this graphical overview you can find summaries of the variables. It shows you correlations between different variables, scatter plots, gender distributions and normal curves. All of the variables are not normally distributed. There are correlations between surf&attitude, points&attitude, surf&stra and surf&deep.
   
-### Regression model
+## Regression model
 
 ```{r}
 my_model <- lm(Points ~ Attitude + gender + Age, data = data)

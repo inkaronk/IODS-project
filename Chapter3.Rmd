@@ -1,0 +1,88 @@
+# **Logistic regression**
+
+*This week I did a logistic regression using Rscript to wrangle the data and RMarkdown for the analysis.*
+
+```{r}
+date()
+
+alc <- read.csv(file = "C:/LocalData/inkaronk/IODS-project/joindata.csv", header = TRUE)
+
+```
+
+## About this dataset
+This data was collected in 2008 from two Portuguese schools using questionnaires and school reports. It has information about student performance and students' alcohol consumption.
+
+## Hypotheses
+Today we will use this data to see if there are any relationships between high/low alcohol consumption and sex, age, number of past class failures and/or the information about participant's romantic relationship status. My hypothesis is that age and failures have positive correlations with high use, but there aren't significant relationship with alcohol consumption and sex and relationship status.
+
+## Chosen variables and their relationship with alcohol consumption
+As I mentioned, I chose sex, age, failures and relationship as my variables that I want to compare with alcohol consumption. Here you can see numerical and graphical distributions of these variables.
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+options(scipen = 999)
+theme_set(theme_bw())
+
+newdata <- select(alc, "high_use", "sex", "age", "failures", "romantic")
+gather(newdata) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + labs(title = "Bar plots of used variables")
+```
+
+This table shows distributions of the used variables. Most of the participants are 15-18 years old, but there are also 19-22 year old students. Most of the students have not past class failures. Majority uses alcohol less than twice a week (high_use is false). One third of the participants is in a romantic relationship. Distributions between female and male do not vary.
+
+```{r}
+library(ggplot2)
+library(cowplot)
+
+g1 <- ggplot(alc, aes(x = high_use, y = sex, col = sex)) + geom_boxplot() + ggtitle("Student alcohol consumption and sex")
+g2 <- ggplot(alc, aes(x = high_use, y = age, col = sex)) + geom_boxplot() + ggtitle("Students' age by alcohol consumption and sex")
+g3 <- ggplot(alc, aes(x = high_use, y = romantic, col = sex)) + geom_boxplot() + ggtitle("Student relationship status by alcohol consumption and sex")
+g4 <- ggplot(alc, aes(x = high_use, y = failures, col = sex)) + geom_boxplot() + ggtitle("Student failures by alcohol consumption and sex")
+
+gall <- plot_grid(g1, g2, g3, g4,
+  align="hv"
+)
+gall
+```
+
+Other variables than age have only binary options, so box plots are not the best way to see relationship with alcohol consumption. Age shows that younger women and older men are more likely to use alcohol more often than twice a week.
+
+```{r}
+library(sjPlot)
+
+tab_xtab(var.row = alc$high_use, var.col = alc$sex)
+tab_xtab(var.row = alc$high_use, var.col = alc$age)
+tab_xtab(var.row = alc$high_use, var.col = alc$romantic)
+tab_xtab(var.row = alc$high_use, var.col = alc$failures)
+```
+When looking at these cross tabulations, p-value was over .05 in age and relationship status, which means that they are not statistically significant when comparing with high use of alcohol.
+
+## Logistic regression
+Now we will do a logistic regression to statistically explore the relationship between the chosen variables and the binary high/low alcohol consumption variable as the target variable.
+
+Sex and romantic relationship status are factor variables, so we need to modify the code.
+```{r}
+alc$sex = as.factor(alc$sex)
+alc$romantic = as.factor(alc$romantic)
+p <- glm(high_use ~ sex - 1 + age + romantic + failures, data = alc, family = "binomial")
+
+summary(p)
+```
+
+That shows us the summary of linear regression. Results are significant for only sex and failures.
+
+## Odds ratios and confedence intervals
+We will now explore the predictive power of the model. We will look at the variables that were statistically significant, sex and failures.
+
+```{r}
+alc$sex = as.factor(alc$sex)
+p2 <- glm(high_use ~ sex - 1 + failures, data = alc, family = "binomial")
+
+OR <- coef(p2) %>% exp
+CI <- confint(p2) %>% exp
+cbind(OR, CI)
+```
+
+Results show that if the participant is male, the odds for high use of alcohol is increasing. The table also shows that if the failures are increasing, also the odds for higher alcohol consumption is increasing.

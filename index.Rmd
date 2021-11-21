@@ -2,8 +2,8 @@
 title: "IODS course project"
 author: "InkaRonkainen"
 output:
-  html_document:
-    theme: cosmo
+  prettydoc::html_pretty:
+    theme: cayman
     toc: yes
     toc_depth: 2
     fig_caption: yes
@@ -20,7 +20,9 @@ knitr::opts_chunk$set(error = TRUE)
 
 ***
 
-# Introduction to Open Data Science - Course Project
+# **Introduction to Open Data Science - Course Project**
+
+*This is my course diary where you can follow my learning journey.*
 
 ```{r child = "chapter1.Rmd"}
 # This will include Chapter 1 (that is updated in its own file) in the document.
@@ -34,4 +36,9 @@ knitr::opts_chunk$set(error = TRUE)
 
 ***
 
+```{r child = "chapter3.Rmd"}
+# This will include Chapter 3 (that is updated in its own file) in the document.
+```
+
+***
 
