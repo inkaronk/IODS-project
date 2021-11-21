@@ -27,7 +27,8 @@ options(scipen = 999)
 theme_set(theme_bw())
 
 newdata <- select(alc, "high_use", "sex", "age", "failures", "romantic")
-gather(newdata) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + labs(title = "Bar plots of used variables")
+gather(newdata) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() 
++ labs(title = "Bar plots of used variables")
 ```
 
 This table shows distributions of the used variables. Most of the participants are 15-18 years old, but there are also 19-22 year old students. Most of the students have not past class failures. Majority uses alcohol less than twice a week (high_use is false). One third of the participants is in a romantic relationship. Distributions between female and male do not vary.
