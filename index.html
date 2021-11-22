@@ -153,6 +153,7 @@ a.sourceLine {
 <li><a href="#chosen-variables-and-their-relationship-with-alcohol-consumption">Chosen variables and their relationship with alcohol consumption</a></li>
 <li><a href="#logistic-regression-1">Logistic regression</a></li>
 <li><a href="#odds-ratios-and-confedence-intervals">Odds ratios and confedence intervals</a></li>
+<li><a href="#predictive-power-of-the-model">Predictive power of the model</a></li>
 </ul></li>
 </ul>
 </div>
@@ -180,7 +181,7 @@ a.sourceLine {
 </ul>
 <p><a href="https://inkaronk.github.io/IODS-project/" class="uri">https://inkaronk.github.io/IODS-project/</a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;Sun Nov 21 18:28:10 2021&quot;</code></pre>
+<pre><code>## [1] &quot;Mon Nov 22 16:16:00 2021&quot;</code></pre>
 <hr />
 </div>
 </div>
@@ -188,7 +189,7 @@ a.sourceLine {
 <h1><strong>Regression and model validation</strong></h1>
 <p><em>This week I did a regression model and validation with R</em></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;Sun Nov 21 18:28:10 2021&quot;</code></pre>
+<pre><code>## [1] &quot;Mon Nov 22 16:16:00 2021&quot;</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;C:/LocalData/inkaronk/IODS-project/learning.2014csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    166 obs. of  7 variables:
@@ -274,7 +275,7 @@ a.sourceLine {
 <h1><strong>Logistic regression</strong></h1>
 <p><em>This week I did a logistic regression using Rscript to wrangle the data and RMarkdown for the analysis.</em></p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;Sun Nov 21 18:28:16 2021&quot;</code></pre>
+<pre><code>## [1] &quot;Mon Nov 22 16:16:07 2021&quot;</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>alc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;C:/LocalData/inkaronk/IODS-project/joindata.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div id="about-this-dataset-1" class="section level2">
 <h2>About this dataset</h2>
@@ -320,13 +321,12 @@ a.sourceLine {
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>Other variables than age have only binary options, so box plots are not the best way to see relationship with alcohol consumption. Age shows that younger women and older men are more likely to use alcohol more often than twice a week.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span></code></pre></div>
-<pre><code>## Learn more about sjPlot with &#39;browseVignettes(&quot;sjPlot&quot;)&#39;.</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;sjPlot&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:cowplot&#39;:
 ## 
 ##     plot_grid, save_plot</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>sex)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>sex)</span></code></pre></div>
 <pre><code>## Warning in sprintf(&quot; &lt;td class=\&quot;summary tdata\&quot; colspan=\&quot;%i\&quot;&gt;%s=%.3f &amp;middot;
 ## df=%i &amp;middot; %s=%.3f &amp;middot; %s=%.3f&lt;/td&gt;&quot;, : one argument not used by format
 ## &#39; &lt;td class=&quot;summary tdata&quot; colspan=&quot;%i&quot;&gt;%s=%.3f &amp;middot; df=%i &amp;middot; %s=%.3f
@@ -398,7 +398,7 @@ Total
 </td>
 </tr>
 </table>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>age)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>age)</span></code></pre></div>
 <pre><code>## Warning in sprintf(&quot; &lt;td class=\&quot;summary tdata\&quot; colspan=\&quot;%i\&quot;&gt;%s=%.3f &amp;middot;
 ## df=%i &amp;middot; %s=%.3f &amp;middot; %s=%.3f&lt;/td&gt;&quot;, : one argument not used by format
 ## &#39; &lt;td class=&quot;summary tdata&quot; colspan=&quot;%i&quot;&gt;%s=%.3f &amp;middot; df=%i &amp;middot; %s=%.3f
@@ -526,11 +526,11 @@ Total
 </td>
 </tr>
 <td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="9">
-χ<sup>2</sup>=7.555 · df=6 · Cramer’s V=0.143 · Fisher’s p=0.227
+χ<sup>2</sup>=7.555 · df=6 · Cramer’s V=0.143 · Fisher’s p=0.249
 </td>
 </tr>
 </table>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>romantic)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>romantic)</span></code></pre></div>
 <pre><code>## Warning in sprintf(&quot; &lt;td class=\&quot;summary tdata\&quot; colspan=\&quot;%i\&quot;&gt;%s=%.3f &amp;middot;
 ## df=%i &amp;middot; %s=%.3f &amp;middot; %s=%.3f&lt;/td&gt;&quot;, : one argument not used by format
 ## &#39; &lt;td class=&quot;summary tdata&quot; colspan=&quot;%i&quot;&gt;%s=%.3f &amp;middot; df=%i &amp;middot; %s=%.3f
@@ -602,7 +602,7 @@ Total
 </td>
 </tr>
 </table>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>failures)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_xtab</span>(<span class="at">var.row =</span> alc<span class="sc">$</span>high_use, <span class="at">var.col =</span> alc<span class="sc">$</span>failures)</span></code></pre></div>
 <pre><code>## Warning in sprintf(&quot; &lt;td class=\&quot;summary tdata\&quot; colspan=\&quot;%i\&quot;&gt;%s=%.3f &amp;middot;
 ## df=%i &amp;middot; %s=%.3f &amp;middot; %s=%.3f&lt;/td&gt;&quot;, : one argument not used by format
 ## &#39; &lt;td class=&quot;summary tdata&quot; colspan=&quot;%i&quot;&gt;%s=%.3f &amp;middot; df=%i &amp;middot; %s=%.3f
@@ -694,7 +694,7 @@ Total
 </td>
 </tr>
 <td style="text-align:right; font-size:0.9em; font-style:italic; padding:0.2cm;" colspan="6">
-χ<sup>2</sup>=14.304 · df=3 · Cramer’s V=0.197 · Fisher’s p=0.001
+χ<sup>2</sup>=14.304 · df=3 · Cramer’s V=0.197 · Fisher’s p=0.004
 </td>
 </tr>
 </table>
@@ -704,11 +704,11 @@ Total
 <h2>Logistic regression</h2>
 <p>Now we will do a logistic regression to statistically explore the relationship between the chosen variables and the binary high/low alcohol consumption variable as the target variable.</p>
 <p>Sex and romantic relationship status are factor variables, so we need to modify the code.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>alc<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(alc<span class="sc">$</span>sex)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>alc<span class="sc">$</span>romantic <span class="ot">=</span> <span class="fu">as.factor</span>(alc<span class="sc">$</span>romantic)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">glm</span>(high_use <span class="sc">~</span> sex <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> romantic <span class="sc">+</span> failures, <span class="at">data =</span> alc, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(p)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>alc<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(alc<span class="sc">$</span>sex)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>alc<span class="sc">$</span>romantic <span class="ot">=</span> <span class="fu">as.factor</span>(alc<span class="sc">$</span>romantic)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">glm</span>(high_use <span class="sc">~</span> sex <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> romantic <span class="sc">+</span> failures, <span class="at">data =</span> alc, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(p)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = high_use ~ sex - 1 + age + romantic + failures, 
@@ -740,18 +740,43 @@ Total
 <div id="odds-ratios-and-confedence-intervals" class="section level2">
 <h2>Odds ratios and confedence intervals</h2>
 <p>We will now explore the predictive power of the model. We will look at the variables that were statistically significant, sex and failures.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>alc<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(alc<span class="sc">$</span>sex)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(high_use <span class="sc">~</span> sex <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> failures, <span class="at">data =</span> alc, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>OR <span class="ot">&lt;-</span> <span class="fu">coef</span>(p2) <span class="sc">%&gt;%</span> exp</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>CI <span class="ot">&lt;-</span> <span class="fu">confint</span>(p2) <span class="sc">%&gt;%</span> exp</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>alc<span class="sc">$</span>sex <span class="ot">=</span> <span class="fu">as.factor</span>(alc<span class="sc">$</span>sex)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(high_use <span class="sc">~</span> sex <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> failures, <span class="at">data =</span> alc, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>OR <span class="ot">&lt;-</span> <span class="fu">coef</span>(p2) <span class="sc">%&gt;%</span> exp</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>CI <span class="ot">&lt;-</span> <span class="fu">confint</span>(p2) <span class="sc">%&gt;%</span> exp</span></code></pre></div>
 <pre><code>## Waiting for profiling to be done...</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(OR, CI)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(OR, CI)</span></code></pre></div>
 <pre><code>##                 OR     2.5 %    97.5 %
 ## sexF     0.2378985 0.1642397 0.3362238
 ## sexM     0.5712620 0.4122237 0.7847273
 ## failures 1.8885234 1.2799408 2.8565099</code></pre>
 <p>Results show that if the participant is male, the odds for high use of alcohol is increasing. The table also shows that if the failures are increasing, also the odds for higher alcohol consumption is increasing.</p>
+</div>
+<div id="predictive-power-of-the-model" class="section level2">
+<h2>Predictive power of the model</h2>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(high_use <span class="sc">~</span> sex <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> failures , <span class="at">data =</span> alc, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>probabilities <span class="ot">&lt;-</span> <span class="fu">predict</span>(p2, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>alc <span class="ot">&lt;-</span> <span class="fu">mutate</span>(alc, <span class="at">probability =</span> probabilities)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>alc <span class="ot">&lt;-</span> <span class="fu">mutate</span>(alc, <span class="at">prediction =</span> probability <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(alc, sex, failures, high_use, probability, prediction) <span class="sc">%&gt;%</span> <span class="fu">tail</span>(<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     sex failures high_use probability prediction
+## 361   M        1     TRUE   0.5189629       TRUE
+## 362   M        0     TRUE   0.3635689      FALSE
+## 363   M        0     TRUE   0.3635689      FALSE
+## 364   M        0     TRUE   0.3635689      FALSE
+## 365   M        0    FALSE   0.3635689      FALSE
+## 366   M        0     TRUE   0.3635689      FALSE
+## 367   M        0    FALSE   0.3635689      FALSE
+## 368   M        1     TRUE   0.5189629       TRUE
+## 369   M        2     TRUE   0.6707730       TRUE
+## 370   M        1    FALSE   0.5189629       TRUE</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">high_use =</span> alc<span class="sc">$</span>high_use, <span class="at">prediction =</span> alc<span class="sc">$</span>prediction)</span></code></pre></div>
+<pre><code>##         prediction
+## high_use FALSE TRUE
+##    FALSE   250    9
+##    TRUE     95   16</code></pre>
+<p>Here you can see 2x2 cross tabulation of predictions versus the actual values.</p>
 <hr />
 </div>
 </div>

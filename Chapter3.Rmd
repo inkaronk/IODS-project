@@ -86,3 +86,17 @@ cbind(OR, CI)
 ```
 
 Results show that if the participant is male, the odds for high use of alcohol is increasing. The table also shows that if the failures are increasing, also the odds for higher alcohol consumption is increasing.
+
+## Predictive power of the model
+
+```{r}
+p2 <- glm(high_use ~ sex - 1 + failures , data = alc, family = "binomial")
+probabilities <- predict(p2, type = "response")
+alc <- mutate(alc, probability = probabilities)
+alc <- mutate(alc, prediction = probability > 0.5)
+select(alc, sex, failures, high_use, probability, prediction) %>% tail(10)
+
+table(high_use = alc$high_use, prediction = alc$prediction)
+```
+
+Here you can see 2x2 cross tabulation of predictions versus the actual values.
