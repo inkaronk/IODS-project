@@ -1,0 +1,137 @@
+# **Clustering and classification**
+
+*This week's exercise was to explore data by clustering and classification.*
+
+```{r}
+library(MASS)
+library(tidyr)
+library(corrplot)
+library(ggplot2)
+
+data("Boston")
+str(Boston)
+dim(Boston)
+```
+
+## About the data set
+
+The data is about housing values in suburbs of Boston. It has 506 rows and 14 columns. Data has information for example about crime rate, average number of rooms per dwelling, full-value property-tax rate, pupil-teacher ratio and some other variables that may effect the housing values.
+
+```{r}
+summary(Boston)
+pairs(Boston)
+
+
+cor_matrix<-cor(Boston) %>% round(digits = 2)
+cor_matrix
+corrplot(cor_matrix, method="circle", type="lower", cl.pos="b", tl.pos="d", tl.cex = 0.6)
+```
+
+Here you can see graphical overview of the data, summaries of the variables and correlations between them. Highest positive correlation is between rad and tax (.91), highest negative correlation is between dis and nox (-.77).
+
+## Standardizing and scaling
+
+```{r}
+boston_scaled <- scale(Boston)
+summary(boston_scaled)
+class(boston_scaled)
+boston_scaled <- as.data.frame(boston_scaled)
+```
+
+Now the data is standardized by scaling it. From this summary you can see that the variables changed: column means are subtracted from the corresponding columns and the difference is divided with standard deviation, which means that the mean of all variables is 0. This new data is also now our data frame.
+
+```{r}
+bins <- quantile(boston_scaled$crim)
+crime <- cut(boston_scaled$crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
+boston_scaled <- dplyr::select(boston_scaled, -crim)
+boston_scaled <- data.frame(boston_scaled, crime)
+table(crime)
+```
+
+The data had a continuous variable called crime, that shows the crime rate of the area. Here I created a categorical variable and used the quantiles (low, middle and high rates) as break points. 
+
+```{r}
+n <- nrow(boston_scaled)
+ind <- sample(n,  size = n * 0.8)
+train <- boston_scaled[ind,]
+test <- boston_scaled[-ind,]
+
+```
+
+Now I splitted the original data to test and train sets, so we can see how the predictions fit by calculating how well did the model preform in prediction.
+
+## Linear discriminant analysis
+
+```{r}
+lda.fit <- lda(crime ~ ., data = train)
+lda.fit
+lda.arrows <- function(x, myscale = 1, arrow_heads = 0.2, color = "purple", tex = 0.75, choices = c(1,2)){
+  heads <- coef(x)
+  arrows(x0 = 0, y0 = 0, 
+         x1 = myscale * heads[,choices[1]], 
+         y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads)
+  text(myscale * heads[,choices], labels = row.names(heads), 
+       cex = tex, col=color, pos=3)
+}
+classes <- as.numeric(train$crime)
+
+#plotting the lda results
+plot(lda.fit, dimen = 2, col = classes, pch = classes)
+lda.arrows(lda.fit, myscale = 1.5)
+```
+
+Next was time to do the classification by using linear discriminant analysis as our method. After the analysis the results were visualized with biplot arrow function.
+
+## Predicting LDA
+
+```{r}
+correct_classes <- test$crime
+test <- dplyr::select(test, -crime)
+
+lda.pred <- predict(lda.fit, newdata = test)
+table(correct = correct_classes, predicted = lda.pred$class)
+```
+
+Here I predicted the classes with LDA model using the test data. To look at the results I did a cross tabulation using crime categories. You can see that not all the predictions were correct.
+
+## Calculating distances between the observations
+
+```{r}
+boston_scaled <- scale(Boston)
+class(boston_scaled)
+boston_scaled <- as.data.frame(boston_scaled)
+
+#euclidean distance method
+dist_eu <- dist(boston_scaled)
+summary(dist_eu)
+
+#manhattan distance method
+dist_man <- dist(boston_scaled, method = 'manhattan')
+summary(dist_man)
+
+```
+
+I calculated the distances between the observations by using two different methods, euclidean and manhattan. Next I will run k-means algorithm on the dataset.
+
+```{r}
+km <-kmeans(boston_scaled, centers = 3)
+pairs(boston_scaled[6:10], col = km$cluster)
+```
+
+You can see the visualization of the clusters, the number of pairs were reduced only to columns 6 to 10, because the first five variables didn't have that big effect on the clustering results. This makes the table easier to read. We need to determine optimal number of clusters, and I well do it by looking at sum of squares within the sum.
+
+```{r}
+set.seed(123)
+k_max <- 10
+twcss <- sapply(1:k_max, function(k){kmeans(boston_scaled, k)$tot.withinss})
+```
+
+Optimal number of cluster is 2, because the total WCSS drops radically at 2. Let's look at the results again.
+
+```{r}
+qplot(x = 1:k_max, y = twcss, geom = 'line')
+km <-kmeans(boston_scaled, centers = 2)
+pairs(boston_scaled[6:10], col = km$cluster)
+```
+
+Here you can see how the different variables are divided. Some of them are in different groups and some are more in connected with each other. For example tax and rad see to be more separate from other variables, but rm, age and dis are more connected with other variables.

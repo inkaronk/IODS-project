@@ -41,4 +41,9 @@ knitr::opts_chunk$set(error = TRUE)
 ```
 
 ***
+```{r child = "chapter4.Rmd"}
+# This will include Chapter 4 (that is updated in its own file) in the document.
+```
+
+***
 
