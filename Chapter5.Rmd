@@ -79,21 +79,20 @@ Now I will do multiple correspondence analysis, for which I need to download a n
 
 ```{r}
 library(FactoMineR)
+library(ggplot2)
+library(tidyr)
 data("tea")
 dim(tea)
 str(tea)
-
-```
-
-As you can see, there are quite many variables (36). Let's choose only a few.
-
-```{r}
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
-tea_time <- select(tea, one_of(keep_columns))
+tea_time <- dplyr::select(tea, one_of(keep_columns))
 summary(tea_time)
 str(tea_time)
 gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
 ```
+
+As you can see, there are quite many variables (36). I chose only a few.
+
 
 Here you can see how people drink their tea. "how" tells us do they use tea bags or not, "How" tells us what people use with tea, "lunch" tells us wheter they drink it at lunch or not, "sugar" tells us do people use sugar, "Tea" tells us what kind of tea people drink and "where" tells us where people drink tea. You can see for example that people drink tea a lot more often not at lunch than lunch and they prefer plain tea over tea with milk. Half of the people uses sugar and earl grey is the most common tea.
 
