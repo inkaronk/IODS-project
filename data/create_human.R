@@ -2,6 +2,7 @@
 # Data wrangling for IODS-course, chapter 4
 library(dplyr)
 library(stringr)
+library(tidyr)
 
 hd <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human_development.csv", stringsAsFactors = F)
 gii <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/gender_inequality.csv", stringsAsFactors = F, na.strings = "..")
@@ -78,4 +79,4 @@ human_c <- select(human_c, -COUNT)
 
 dim(human_c) # [1] 155   8 <- good!
 
-write.csv(human_c,"C:/LocalData/inkaronk/IODS-project/create_humancsv", row.names = TRUE)
+write.table(human_c,"C:/LocalData/inkaronk/IODS-project/humancsv.csv", sep=",", row.names = TRUE)

@@ -1,0 +1,109 @@
+# **Dimensionality reduction techniques**
+
+*This week I'll learn how to reduce dimensions and do the principal component analysis (PCA) and multiple correspondence analysis (MCA).*
+
+```{r}
+library(stringr)
+library(tidyverse)
+library(GGally)
+library(corrplot)
+library(ggplot2)
+
+
+date()
+
+human = read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep=",", header=TRUE)
+```
+
+## About the data set
+
+```{r}
+names(human)
+str(human)
+summary(human)
+dim(human)
+```
+
+There are 8 variables, which are called
+"Edu2.FM"   "Labo.FM"   "Edu.Exp"   "Life.Exp" 
+"GNI"       "Mat.Mor"   "Ado.Birth" "Parli.F"   
+
+Long (original) variable names are:
+
+* Ratio of Female and Male populations with secondary education in each country
+* Ratio of labour force participation of females and males in each country
+* Expected Years of Education
+* Life Expectancy at Birth
+* Gross National Income (GNI) per Capita
+* Maternal Mortality Ratio
+* Adolescent Birth Rate
+* Percent Representation in Parliament
+
+```{r}
+ggpairs(human)
+cor(human) %>% corrplot
+```
+
+From this visual overview of the variables you can see that biggest positive correlation is between Life.Exp and Edu.Exp. Biggest negative correlation is between Mat.Mor and Life.Exp. There are not significant correlations between all of the variables.
+
+## Principal Component Analysis
+
+Now I will perform principal component analysis (PCA) on the not standardized data.
+
+```{r}
+pca_human <- prcomp(human)
+s <- summary(pca_human)
+pca_pr1 <- round(100*s$importance[2,], digits = 1)
+pc_lab1 <- paste0(names(pca_pr1), " (", pca_pr1, "%)")
+biplot(pca_human, cex = c(0.8, 1), col = c("black", "purple"), xlab = pc_lab1[1], ylab = pc_lab1[2])
+```
+
+And next I will do the same with standardized data set:
+
+```{r}
+human_s <- scale(human)
+pca_human_s <- prcomp(human_s)
+s2 <- summary(pca_human_s)
+pca_pr2 <- round(100*s2$importance[2,], digits = 1)
+pc_lab2 <- paste0(names(pca_pr2), " (", pca_pr2, "%)")
+biplot(pca_human_s, cex = c(0.8, 1), col = c("black", "orange"), xlab = pc_lab2[1], ylab = pc_lab2[2])
+
+```
+
+## Differences in analysis when using non-standardized and standardized data
+
+When using non-standardized data set, PC1 explains 100% of the variances. Standardized data gives more exact results, PC1 explains 54% and PC2 16%.
+
+## Multiple Correspondence Analysis
+Now I will do multiple correspondence analysis, for which I need to download a new data set called tea:
+
+```{r}
+library(FactoMineR)
+data("tea")
+dim(tea)
+str(tea)
+
+```
+
+As you can see, there are quite many variables (36). Let's choose only a few.
+
+```{r}
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+tea_time <- select(tea, one_of(keep_columns))
+summary(tea_time)
+str(tea_time)
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+```
+
+Here you can see how people drink their tea. "how" tells us do they use tea bags or not, "How" tells us what people use with tea, "lunch" tells us wheter they drink it at lunch or not, "sugar" tells us do people use sugar, "Tea" tells us what kind of tea people drink and "where" tells us where people drink tea. You can see for example that people drink tea a lot more often not at lunch than lunch and they prefer plain tea over tea with milk. Half of the people uses sugar and earl grey is the most common tea.
+
+
+Let's hop on to the analysis.
+
+```{r}
+mca <- MCA(tea_time, graph = FALSE)
+summary(mca)
+plot(mca, invisible=c("ind"), habillage = "quali")
+```
+
+Here you can see which variables belong together. For example, it's more likely to frink unpackaged tea in a tea shop and tea bag tea in chain store.

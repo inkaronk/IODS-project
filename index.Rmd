@@ -7,8 +7,8 @@ output:
     toc: yes
     toc_depth: 2
     fig_caption: yes
-    fig_width: 6
-    fig_height: 4
+    fig_width: 10
+    fig_height: 8
   pdf_document:
     toc: yes
     toc_depth: '2'
@@ -46,4 +46,8 @@ knitr::opts_chunk$set(error = TRUE)
 ```
 
 ***
+```{r child = "chapter5.Rmd"}
+# This will include Chapter 4 (that is updated in its own file) in the document.
+```
 
+***
