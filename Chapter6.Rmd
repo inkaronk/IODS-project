@@ -1,0 +1,28 @@
+# **Analysis of longitudinal data**
+
+*This is the last chapter of the IODS course. I will do analysis on a longitudinal data set and intepret the results.*
+
+```{r}
+date()
+
+library(dplyr)
+library(tidyr)
+
+BPRS <- read.csv(file = "C:/LocalData/inkaronk/IODS-project/BPRS.csv", header = TRUE)
+RATS <- read.csv(file = "C:/LocalData/inkaronk/IODS-project/RATS.csv", header = TRUE)
+
+BPRS$treatment <- factor(BPRS$treatment)
+BPRS$subject <- factor(BPRS$subject)
+RATS$ID <- factor(RATS$ID)
+RATS$Group <- factor(RATS$Group)
+
+BPRSL <-  BPRS %>% gather(key = weeks, value = bprs, -treatment, -subject)
+BPRSL <-  BPRSL %>% mutate(week = as.integer(substr(weeks,5,5)))
+
+RATSL <- RATS %>%
+  gather(key = WD, value = Weight, -ID, -Group) %>%
+  mutate(Time = as.integer(substr(WD,3,4))) 
+
+```
+
+## About this dataset
